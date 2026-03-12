@@ -1,0 +1,263 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&family=Syne:wght@400..800&display=swap');
+
+:root {
+  --font-inter: "Inter", sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
+  --font-syne: "Syne", sans-serif;
+  --metro-gold: #9E7448;
+  --metro-gold-light: #c9985e;
+  --metro-gold-dark: #7a5630;
+  --metro-white: #ffffff;
+  --neon-glow: 0 0 20px rgba(158, 116, 72, 0.4);
+  --neon-glow-lg: 0 0 60px rgba(158, 116, 72, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .brand-font {
+  font-family: "Syne", sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #9E7448; border-radius: 999px; }
+body { -ms-overflow-style: none; scrollbar-width: thin; scrollbar-color: #9E7448 #000; }
+
+::selection { background-color: #9E7448; color: white; }
+
+/* ========================================
+   DESIGN TOKENS & UTILITIES
+   ======================================== */
+
+.text-glow {
+  text-shadow: 0 0 30px rgba(158, 116, 72, 0.7), 0 0 60px rgba(158, 116, 72, 0.4), 0 2px 4px rgba(0,0,0,0.9);
+}
+.text-glow-sm {
+  text-shadow: 0 0 15px rgba(158, 116, 72, 0.6), 0 1px 3px rgba(0,0,0,0.8);
+}
+.box-glow {
+  box-shadow: 0 0 30px rgba(158, 116, 72, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.box-glow-lg {
+  box-shadow: 0 0 80px rgba(158, 116, 72, 0.15), 0 0 160px rgba(158, 116, 72, 0.05);
+}
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.glass-strong {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.neon-border {
+  border: 1px solid rgba(158, 116, 72, 0.4);
+  box-shadow: 0 0 20px rgba(158, 116, 72, 0.1), inset 0 0 20px rgba(158, 116, 72, 0.05);
+}
+
+/* ========================================
+   BACKGROUND PATTERNS
+   ======================================== */
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.bg-grid-gold {
+  background-image:
+    linear-gradient(to right, rgba(158, 116, 72, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(158, 116, 72, 0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.bg-dots {
+  background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* ========================================
+   ANIMATED GRADIENTS
+   ======================================== */
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to { background-position: 200% center; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-gradient { background-size: 300% 300%; animation: gradient-flow 4s ease infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-shimmer { background-size: 200% auto; animation: shimmer 3s linear infinite; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #c9985e, #9E7448, #7a5630);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-gradient-white-gold {
+  background: linear-gradient(90deg, #fff 0%, #9E7448 50%, #fff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+/* Keep backward compat alias */
+.text-gradient-blue { background: linear-gradient(135deg, #c9985e, #9E7448, #d4a76a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.text-gradient-premium { background: linear-gradient(90deg, #fff 0%, #9E7448 50%, #fff 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer 4s linear infinite; }
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 36px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #7a5630, #9E7448, #c9985e);
+  background-size: 200% 200%;
+  box-shadow: 0 8px 32px rgba(158, 116, 72, 0.4), 0 2px 8px rgba(158, 116, 72, 0.2);
+}
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(158, 116, 72, 0.55), 0 4px 16px rgba(158, 116, 72, 0.3);
+  background-position: right center;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: 0.6s;
+}
+.btn-primary:hover::before { left: 100%; }
+
+.btn-ghost {
+  padding: 14px 36px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+}
+.btn-ghost:hover {
+  transform: translateY(-2px);
+  background: rgba(158, 116, 72, 0.08);
+  border-color: rgba(158, 116, 72, 0.4);
+  box-shadow: 0 8px 32px rgba(158, 116, 72, 0.15);
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+
+.card-glass {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s ease;
+}
+.card-glass:hover {
+  background: rgba(158, 116, 72, 0.05);
+  border-color: rgba(158, 116, 72, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(158, 116, 72, 0.12);
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 24px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.4s ease;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(158, 116, 72, 0.7), transparent);
+}
+.stat-card:hover {
+  background: rgba(158, 116, 72, 0.06);
+  border-color: rgba(158, 116, 72, 0.22);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(158, 116, 72, 0.14);
+}
+
+/* ========================================
+   TUNNEL TEXT VISIBILITY HELPERS
+   ======================================== */
+.tunnel-text-shadow {
+  text-shadow:
+    0 0 40px rgba(0,0,0,1),
+    0 0 80px rgba(0,0,0,0.9),
+    0 2px 8px rgba(0,0,0,1),
+    0 4px 24px rgba(0,0,0,0.8);
+}
+.tunnel-label-shadow {
+  text-shadow:
+    0 0 12px rgba(0,0,0,1),
+    0 1px 4px rgba(0,0,0,1);
+}
