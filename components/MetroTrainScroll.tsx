@@ -109,10 +109,10 @@ export default function MetroTrainScroll() {
 
 
   return (
-    <div ref={containerRef} className="relative h-[800vh] bg-black">
+    <div ref={containerRef} className="relative h-[800vh] bg-white">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         {!imagesLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center z-10 bg-black">
+          <div className="absolute inset-0 flex items-center justify-center z-10 bg-white">
             <div className="flex flex-col items-center gap-4">
               <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
               <span className="text-blue-500 font-bold tracking-tighter uppercase">Initializing Journey...</span>
@@ -122,11 +122,11 @@ export default function MetroTrainScroll() {
         <canvas 
           ref={canvasRef} 
           className="w-full h-full object-contain"
-          style={{ filter: "contrast(1.1) brightness(0.4)" }}
+          style={{ filter: "contrast(1.1) brightness(0.9)" }}
         />
         
         {/* Ambient Glow */}
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-900/10 via-transparent to-black/20" />
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-100/30 via-transparent to-white/20" />
       </div>
     </div>
   )

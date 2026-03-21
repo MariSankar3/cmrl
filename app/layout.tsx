@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-sans bg-black antialiased">
+      <body className="font-sans bg-dark-base antialiased">
         {children}
       </body>
     </html>

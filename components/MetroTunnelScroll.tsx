@@ -10,13 +10,13 @@ import { useScroll, motion } from "framer-motion"
      0–40%   : Tunnel appears, darkness glows with depth
      40–70%  : Train emerges from far end
      70–100% : Train rushes toward viewer, full reveal
-   Brand colour: #9E7448  (golden bronze)
+   Brand colour: #0000FF  (deep blue)
 ───────────────────────────────────────────────────────── */
 
 const FRAME_COUNT = 240
 const PAD = (n: number) => String(n).padStart(3, "0")
 const FRAME_SRC = (i: number) => `/metro-tunnel/ezgif-frame-${PAD(i)}.jpg`
-const GOLD = "rgba(158,116,72,"
+const GOLD = "rgba(0,0,255,"
 
 // Scene caption data
 const CAPTIONS = [
@@ -145,38 +145,38 @@ export default function MetroTunnelScroll() {
   return (
     <div ref={containerRef} className="relative" style={{ height: "800vh" }}>
       {/* ── Sticky viewport ─────────────────────────── */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-black">
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
 
         {/* Canvas */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
         {/* Loading overlay */}
         {!imagesLoaded && (
-          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black">
+          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white">
             <div className="relative mb-8">
               <div
                 className="absolute inset-0 rounded-full animate-ping scale-125"
-                style={{ border: "1px solid rgba(158,116,72,0.2)" }}
+                style={{ border: "1px solid rgba(0,0,255,0.2)" }}
               />
               <div
                 className="w-24 h-24 rounded-full flex items-center justify-center"
-                style={{ border: "2px solid rgba(158,116,72,0.5)" }}
+                style={{ border: "2px solid rgba(0,0,255,0.5)" }}
               >
-                <span className="text-2xl font-black" style={{ color: "#c9985e", fontFamily: "Syne, sans-serif" }}>
+                <span className="text-2xl font-black uppercase tracking-tighter" style={{ color: "#3333FF" }}>
                   {loadProgress}
                 </span>
               </div>
             </div>
-            <div className="w-64 h-px bg-white/10 rounded-full overflow-hidden mb-4">
+            <div className="w-64 h-px bg-black/10 rounded-full overflow-hidden mb-4">
               <div
                 className="h-full transition-all duration-300"
                 style={{
                   width: `${loadProgress}%`,
-                  background: "linear-gradient(to right, #7a5630, #9E7448, #c9985e)"
+                  background: "linear-gradient(to right, #0000CC, #0000FF, #3333FF)"
                 }}
               />
             </div>
-            <p className="text-xs uppercase tracking-[0.3em] text-white/30 font-semibold">
+            <p className="text-xs uppercase tracking-[0.3em] text-black/50 font-semibold">
               Entering The Tunnel
             </p>
           </div>
@@ -186,13 +186,13 @@ export default function MetroTunnelScroll() {
         {imagesLoaded && (
           <div
             className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 pt-24 pb-8 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%)" }}
+            style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.85) 0%, transparent 100%)" }}
           >
             <div className="flex items-center gap-3">
-              <div className="w-px h-8" style={{ background: "rgba(158,116,72,0.8)" }} />
+              <div className="w-px h-8" style={{ background: "rgba(0,0,255,0.8)" }} />
               <span
                 className="text-[11px] uppercase tracking-[0.35em] font-bold"
-                style={{ color: "#c9985e", textShadow: "0 1px 4px rgba(0,0,0,0.9)" }}
+                style={{ color: "#3333FF", textShadow: "0 1px 4px rgba(255,255,255,0.9)" }}
               >
                 Chennai Metro Rail
               </span>
@@ -200,10 +200,10 @@ export default function MetroTunnelScroll() {
             <div className="flex items-center gap-2">
               <div
                 className="w-1.5 h-1.5 rounded-full animate-pulse"
-                style={{ background: "#9E7448" }}
+                style={{ background: "#0000FF" }}
               />
-              <span className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-medium"
-                style={{ textShadow: "0 1px 3px rgba(0,0,0,0.9)" }}>
+              <span className="text-[10px] uppercase tracking-[0.25em] text-black/60 font-medium"
+                style={{ textShadow: "0 1px 3px rgba(255,255,255,0.9)" }}>
                 Scroll to Journey
               </span>
             </div>
@@ -227,14 +227,14 @@ export default function MetroTunnelScroll() {
               <div
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6"
                 style={{
-                  background: "rgba(0,0,0,0.65)",
-                  border: "1px solid rgba(158,116,72,0.5)",
+                  background: "rgba(255,255,255,0.8)",
+                  border: "1px solid rgba(0,0,255,0.5)",
                   backdropFilter: "blur(8px)",
                 }}
               >
                 <span
                   className="text-[10px] uppercase tracking-[0.4em] font-bold"
-                  style={{ color: "#c9985e" }}
+                  style={{ color: "#3333FF" }}
                 >
                   {caption.phase === "tunnel" && "— The Tunnel —"}
                   {caption.phase === "light" && "— A Train Approaches —"}
@@ -246,10 +246,10 @@ export default function MetroTunnelScroll() {
               {/* Main headline — dark backdrop for legibility */}
               <div className="px-8 py-5">
                 <h2
-                  className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter leading-[0.9] mb-2"
+                  className="text-5xl md:text-7xl lg:text-8xl font-black text-black tracking-tighter leading-[0.9] mb-2"
                   style={{
                     fontFamily: "Syne, sans-serif",
-                    textShadow: "0 2px 20px rgba(0,0,0,1), 0 0 60px rgba(0,0,0,0.8)"
+                    textShadow: "0 2px 20px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,0.8)"
                   }}
                 >
                   {caption.line1}
@@ -258,10 +258,10 @@ export default function MetroTunnelScroll() {
                   className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9]"
                   style={{
                     fontFamily: "Syne, sans-serif",
-                    WebkitTextStroke: "1.5px #9E7448",
+                    WebkitTextStroke: "1.5px #0000FF",
                     color: "transparent",
                     textShadow: "none",
-                    filter: "drop-shadow(0 2px 8px rgba(81, 57, 31, 0.5))",
+                    filter: "drop-shadow(0 2px 8px rgba(0, 0, 255, 0.5))",
                   }}
                 >
                   {caption.line2}

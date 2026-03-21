@@ -73,14 +73,12 @@ export default function MetroStationsOverlay() {
     offset: ["start start", "end end"]
   })
 
-  // Add smooth spring physics for a "liquid" feel
   const smoothScroll = useSpring(scrollYProgress, {
     stiffness: 40,
     damping: 30,
     restDelta: 0.001
   })
 
-  // State for active station tracking
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -89,25 +87,24 @@ export default function MetroStationsOverlay() {
     })
   }, [smoothScroll])
 
-  // Fade out the intro text when user starts scrolling
-  const introOpacity = useTransform(smoothScroll, [0, 0.05], [1, 0])
-
   return (
-    <div ref={containerRef} className="relative w-full h-[600vh] z-30 bg-[#050505]">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 bg-grid opacity-5 pointer-events-none" />
+    <div ref={containerRef} className="relative w-full h-[600vh] z-30 bg-dark-base">
+      {/* Background */}
+      <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_50%,rgba(0,212,255,0.02),transparent)] pointer-events-none" />
+
       <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
 
-        {/* Persistent Branding */}
+        {/* Branding */}
         <div className="absolute top-16 left-6 md:top-24 md:left-12 z-40 pointer-events-none">
            <motion.div 
              initial={{ opacity: 0, x: -20 }}
              whileInView={{ opacity: 1, x: 0 }}
              className="flex flex-col"
            >
-              <span className="text-metro-gold font-bold uppercase tracking-[0.4em] text-[9px] md:text-xs mb-1.5">Network Topology</span>
-              <h2 className="text-2xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none">
-                METRO <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-metro-gold to-metro-gold-light">NETWORK</span>
+              <span className="text-neon-blue font-bold uppercase tracking-[0.4em] text-[9px] md:text-xs mb-1.5">Network Topology</span>
+              <h2 className="text-2xl md:text-5xl font-extrabold text-white uppercase tracking-tighter leading-none">
+                METRO <br /> <span className="text-gradient-neon">NETWORK</span>
               </h2>
            </motion.div>
         </div>
@@ -115,11 +112,11 @@ export default function MetroStationsOverlay() {
         <div className="absolute bottom-12 right-12 z-40 pointer-events-none hidden md:block">
            <div className="flex flex-col items-end text-white/20 text-[10px] font-bold uppercase tracking-[0.3em]">
               <span>Chennai Metropolitan Area</span>
-              <span>System Version 4.0.2</span>
+              <span className="text-neon-blue/40">System Version 4.0.2</span>
            </div>
         </div>
 
-        {/* The Static SVG Map Canvas */}
+        {/* SVG Map */}
         <motion.div 
           style={{ 
             scale: useTransform(smoothScroll, [0, 0.9, 0.9], [0.9, 1.1, 1.1]),
@@ -130,62 +127,77 @@ export default function MetroStationsOverlay() {
            
            <svg 
              viewBox="0 0 1100 400" 
-             className="h-[35vh] w-auto md:w-full md:h-auto drop-shadow-2xl overflow-visible pointer-events-none relative z-10 transition-transform duration-1000 ease-in-out rotate-90 md:rotate-0"
+             className="h-[35vh] w-auto md:w-full md:h-auto overflow-visible pointer-events-none relative z-10 transition-transform duration-1000 ease-in-out rotate-90 md:rotate-0"
            >
-              <defs />
+              <defs>
+                <filter id="neonGlow">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feFlood floodColor="#00d4ff" floodOpacity="0.4" result="color" />
+                  <feComposite in="color" in2="blur" operator="in" result="glow" />
+                  <feMerge>
+                    <feMergeNode in="glow" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <filter id="greenGlow">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feFlood floodColor="#22c55e" floodOpacity="0.4" result="color" />
+                  <feComposite in="color" in2="blur" operator="in" result="glow" />
+                  <feMerge>
+                    <feMergeNode in="glow" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
 
-              {/* BACKGROUND TRACKS (Inactive) */}
-              
               {/* Blue Line Base Track */}
-               {/* 60 to 850 is straight top. Drops at 850 (Guindy) to 900 (Alandur). Down more to 940 (Nanganallur). */}
               <path 
                 d="M 60,150 L 850,150 L 900,200 L 940,250 L 1010,250" 
                 fill="none" 
-                stroke="#0e7490" // dark cyan
+                stroke="#0e3b4e"
                 strokeWidth="10" 
                 strokeLinejoin="round"
-                className="opacity-50"
+                className="opacity-60"
               />
               
               {/* Green Line Base Track */}
-              {/* Central(490,150) -> Egmore(520,250) -> Ekkattu(884,250) -> Alandur(900,200) -> St Thomas(940,150) */}
               <path 
                 d="M 490,150 L 520,250 L 884,250 L 900,200 L 940,150" 
                 fill="none" 
-                stroke="#166534" // dark green
+                stroke="#0a3d1e"
                 strokeWidth="10" 
                 strokeLinejoin="round"
-                className="opacity-50"
+                className="opacity-60"
               />
 
-
-              {/* ACTIVE FILL TRACKS (Fills up as user scrolls) */}
+              {/* Active Blue Line */}
               <motion.path 
                 d="M 60,150 L 850,150 L 900,200 L 940,250 L 1010,250" 
                 fill="none" 
-                stroke="#0ea5e9" 
+                stroke="#00d4ff" 
                 strokeWidth="10" 
                 strokeLinejoin="round"
+                filter="url(#neonGlow)"
                 style={{
                   pathLength: useTransform(scrollYProgress, [0, 0.5], [0, 1]),
                   opacity: useTransform(scrollYProgress, [0, 0.05], [0, 1])
                 }}
               />
 
+              {/* Active Green Line */}
               <motion.path 
                 d="M 490,150 L 520,250 L 884,250 L 900,200 L 940,150" 
                 fill="none" 
                 stroke="#22c55e" 
                 strokeWidth="10" 
                 strokeLinejoin="round"
+                filter="url(#greenGlow)"
                 style={{
                   pathLength: useTransform(scrollYProgress, [0.5, 1], [0, 1]),
                   opacity: useTransform(scrollYProgress, [0.45, 0.55], [0, 1])
                 }}
               />
 
-              {/* STATIONS RENDERING */}
-              
               {/* Blue Line Stations */}
               {blueMapped.map((s) => {
                 const isActive = progress >= s.start && progress < s.end
@@ -193,56 +205,35 @@ export default function MetroStationsOverlay() {
 
                 return (
                   <g key={`blue-${s.name}`}>
-                    {/* Node Background */}
                     <circle 
                       cx={s.x} 
                       cy={s.y} 
                       r={s.isInterchange ? 10 : 6} 
-                      fill={isPassed || isActive ? "#06b6d4" : "#1f2937"} 
+                      fill={isPassed || isActive ? "#00d4ff" : "#1e293b"} 
                       stroke="#0f172a"
                       strokeWidth="2"
                     />
                     
-                    {/* Node LED */}
                     {(isPassed || isActive) && (
-                       <circle cx={s.x} cy={s.y} r={s.isInterchange ? 6 : 4} fill="#1f2937" />
+                       <circle cx={s.x} cy={s.y} r={s.isInterchange ? 6 : 4} fill="#0f172a" />
                     )}
 
-                    {/* Highly Compressed Station Name */}
-                    {s.align === "top" ? (
-                       <text 
-                         x={s.x + 6} 
-                         y={s.y - 10} 
-                         fill={isActive ? "#fff" : "rgba(255,255,255,0.6)"} 
-                         fontSize={isActive ? "10" : "8"} 
-                         fontWeight={isActive ? "bold" : "600"}
-                         fontFamily="sans-serif"
-                         textAnchor="start"
-                         transform={`rotate(-45 ${s.x+6} ${s.y-10})`}
-                         className="transition-all duration-300 pointer-events-auto cursor-default hover:fill-white"
-                       >
-                         {s.name}
-                       </text>
-                    ) : (
-                       <text 
-                         x={s.x + 6} 
-                         y={s.y + 14} 
-                         fill={isActive ? "#fff" : "rgba(255,255,255,0.6)"} 
-                         fontSize={isActive ? "10" : "8"} 
-                         fontWeight={isActive ? "bold" : "600"}
-                         fontFamily="sans-serif"
-                         textAnchor="start"
-                         transform={`rotate(45 ${s.x+6} ${s.y+14})`}
-                         className="transition-all duration-300 pointer-events-auto cursor-default hover:fill-white"
-                       >
-                         {s.name}
-                       </text>
-                    )}
+                    <text 
+                      x={s.x + 6} 
+                      y={s.align === "top" ? s.y - 12 : s.y + 16} 
+                      fill={isActive ? "#00d4ff" : "rgba(255,255,255,0.35)"} 
+                      fontSize={isActive ? "10" : "8"} 
+                      fontWeight={isActive ? "bold" : "600"}
+                      className="font-jakarta transition-all duration-300 pointer-events-auto cursor-default hover:fill-[#00d4ff]"
+                      textAnchor="start"
+                      transform={`rotate(${s.align === "top" ? -45 : 45} ${s.x + 6} ${s.align === "top" ? s.y - 12 : s.y + 16})`}
+                    >
+                      {s.name}
+                    </text>
                     
-                    {/* Airport Icon exception */}
                     {s.hasIcon && (
                       <g transform={`translate(${s.x + 20}, ${s.y - 8})`}>
-                         <path d="M10.5 4.5l-1.5 6h-6l-1.5 1.5 4.5 1.5 1.5 4.5 1.5-1.5v-6l6-1.5 1.5-4.5h-10.5z" fill="#fff" transform="scale(1)" />
+                         <path d="M10.5 4.5l-1.5 6h-6l-1.5 1.5 4.5 1.5 1.5 4.5 1.5-1.5v-6l6-1.5 1.5-4.5h-10.5z" fill="#00d4ff" />
                       </g>
                     )}
                   </g>
@@ -256,66 +247,48 @@ export default function MetroStationsOverlay() {
 
                 return (
                   <g key={`green-${s.name}`}>
-                    {/* Render node only if not an interchange */}
                     {!s.isInterchange && (
                        <>
                          <circle 
                            cx={s.x} 
                            cy={s.y} 
                            r={6} 
-                           fill={isPassed || isActive ? "#22c55e" : "#1f2937"} 
+                           fill={isPassed || isActive ? "#22c55e" : "#1e293b"} 
                            stroke="#0f172a"
                            strokeWidth="2"
                          />
                          {(isPassed || isActive) && (
-                            <circle cx={s.x} cy={s.y} r={4} fill="#1f2937" />
+                            <circle cx={s.x} cy={s.y} r={4} fill="#0f172a" />
                          )}
                        </>
                     )}
 
-                    {/* Station Name */}
-                    {s.align === "top" ? (
-                       <text 
-                         x={s.x + 6} 
-                         y={s.y - 10} 
-                         fill={isActive ? "#fff" : "rgba(255,255,255,0.6)"} 
-                         fontSize={isActive ? "10" : "8"} 
-                         fontWeight={isActive ? "bold" : "600"}
-                         fontFamily="sans-serif"
-                         textAnchor="start"
-                         transform={`rotate(-45 ${s.x+6} ${s.y-10})`}
-                         className="transition-all duration-300 pointer-events-auto cursor-default hover:fill-white"
-                       >
-                         {s.name}
-                       </text>
-                    ) : (
-                       <text 
-                         x={s.x + 6} 
-                         y={s.y + 14} 
-                         fill={isActive ? "#fff" : "rgba(255,255,255,0.6)"} 
-                         fontSize={isActive ? "10" : "8"} 
-                         fontWeight={isActive ? "bold" : "600"}
-                         fontFamily="sans-serif"
-                         textAnchor="start"
-                         transform={`rotate(45 ${s.x+6} ${s.y+14})`}
-                         className="transition-all duration-300 pointer-events-auto cursor-default hover:fill-white"
-                       >
-                         {s.name}
-                       </text>
-                    )}
+                    <text 
+                      x={s.x + 6} 
+                      y={s.align === "top" ? s.y - 12 : s.y + 16} 
+                      fill={isActive ? "#22c55e" : "rgba(255,255,255,0.35)"} 
+                      fontSize={isActive ? "10" : "8"} 
+                      fontWeight={isActive ? "bold" : "600"}
+                      className="font-jakarta transition-all duration-300 pointer-events-auto cursor-default hover:fill-[#22c55e]"
+                      textAnchor="start"
+                      transform={`rotate(${s.align === "top" ? -45 : 45} ${s.x + 6} ${s.align === "top" ? s.y - 12 : s.y + 16})`}
+                    >
+                      {s.name}
+                    </text>
                   </g>
                 )
               })}
+
               
-              {/* Dotted Suburban Line extensions (Static mapping details) */}
-              <g className="opacity-40">
+              {/* Dotted extensions */}
+              <g className="opacity-30">
                  <path d="M 940,150 Q 955,150 965,120" fill="none" stroke="#fff" strokeWidth="3" strokeDasharray="4,4" />
                  <circle cx="965" cy="120" r="3" fill="#ef4444" />
-                 <text x="975" y="123" fill="#fff" fontSize="10" fontFamily="sans-serif">Suburban</text>
+                 <text x="975" y="123" fill="rgba(255,255,255,0.4)" fontSize="10" fontFamily="sans-serif">Suburban</text>
 
                  <path d="M 1010,250 Q 1030,250 1030,210" fill="none" stroke="#fff" strokeWidth="3" strokeDasharray="4,4" />
                  <circle cx="1030" cy="210" r="3" fill="#ef4444" />
-                 <text x="1035" y="220" fill="#fff" fontSize="10" fontFamily="sans-serif">Tirisulam</text>
+                 <text x="1035" y="220" fill="rgba(255,255,255,0.4)" fontSize="10" fontFamily="sans-serif">Tirisulam</text>
               </g>
 
            </svg>
